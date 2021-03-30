@@ -63,6 +63,9 @@ a47 = $47
 a48 = $48
 a49 = $49
 a4A = $4A
+a4B = $4B
+a4C = $4C
+a4D = $4D
 a50 = $50
 a54 = $54
 a55 = $55
@@ -113,6 +116,7 @@ p38 = $38
 p3C = $3C
 p46 = $46
 p48 = $48
+p4A = $4A
 p54 = $54
 p56 = $56
 p88 = $88
@@ -9062,801 +9066,777 @@ b9FC0   .BYTE $33,$91,$A5,$26,$20,$3A,$A0,$A5
         .BYTE $C6,$10,$9B,$BD,$2E,$91,$24,$69
         .BYTE $10,$0C,$09,$06,$9D,$2E,$91,$A9
         .BYTE $FF,$48,$A9,$40,$4D,$4F,$4E,$43
-aA000   .BYTE $01
-sA001   .BYTE $03,$08 ;SLO (p08,X)
-sA004   =*+$01
-        ORA (p00),Y
-        CPX #$A0
-        BPL b9FC0
-        BNE bA05A
-        JSR s584F
-        BRK #$00
-        RTI 
+aA000   .BYTE $AA
+sA001   JMP jA00B
 
-        EOR (p03,X)
-        PHP 
-        ORA (p16,X)
-        BPL bA018
-bA018   BCS bA03D
-        .BYTE $04,$23 ;NOP a23
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BPL bA02C
-bA02C   BRK #$00
-        BRK #$00
-        BRK #$99
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$55
-        BRK #$00
-bA03D   =*+$01
-        BRK #$00
-        BEQ bA073
-        BPL bA057
-        BRK #$00
-        BEQ bA079
-        BRK #$00
-        .BYTE $03,$02 ;SLO (p02,X)
-        PHP 
-        .BYTE $33,$00 ;RLA (p00),Y
-        CPX #$A0
-        CLI 
-        BRK #$00
-        BRK #$00
-        BRK #$00
-bA057   =*+$01
-        BRK #$00
-        LSR a4A
-bA05A   ASL a0A
-        ORA (p16,X)
-        ASL @wa0000
-        BVS bA07F
-        BPL bA065
-bA065   BRK #$01
-        BRK #$00
-        .BYTE $FC,$04,$00 ;NOP $0004,X
-        .BYTE $13,$00 ;SLO (p00),Y
-        BRK #$00
-        BRK #$00
-bA073   =*+$01
-        BRK #$0A
-        BRK #$00
-        BRK #$00
-bA079   =*+$01
-        BRK #$00
-        INY 
-        LDY #$00
-        BRK #$00
-bA07F   BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$F0
-        .BYTE $33,$04 ;RLA (p04),Y
-        .BYTE $17,$00 ;SLO f00,X
-        BRK #$90
-        LDY #$00
-        BRK #$4B
-        .BYTE $4B,$00 ;ALR #$00
-        ORA (p00,X)
+sA004   STA a4A
+        STX a4B
+        JMP jA1E5
+
+jA00B   LDA aA000
+        BEQ bA01E
+        JSR sA01F
+        LDX #$18
+bA015   LDA fA686,X
+        STA $D400,X  ;Voice 1: Frequency Control - Low-Byte
+        DEX 
+        BPL bA015
+bA01E   RTS 
+
+sA01F   LDA aA69B
         CLC 
-        ORA f00,X
-        BRK #$00
-        BPL bA0AC
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        RTS 
-
-bA0AC   =*+$01
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        ORA (p00),Y
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        ASL @wa0000,X
-        .BYTE $03,$00 ;SLO (p00,X)
-        INY 
-        LDY #$00
-        BRK #$4B
-        JMP j0102
-
-        BRK #$18
-        ORA f00,X
-        BRK #$00
-        BPL bA0E4
-        .BYTE $23,$00 ;RLA (p00,X)
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-bA0E4   BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BEQ bA123
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        ORA (p00,X)
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        ORA (p04,X)
-        PHP 
-        EOR f00,X
-        CPX #$A1
-        BPL bA109
-bA109   BRK #$00
-bA10B   BRK #$00
-        BRK #$00
-        BRK #$44
-        EOR a05
-        .BYTE $0B,$01 ;ANC #$01
-        ASL f13,X
-        BRK #$23
-        .BYTE $23,$10 ;RLA (p10,X)
-        BPL bA11D
-bA11D   BRK #$00
-        BRK #$00
-        BRK #$00
-bA123   BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$20
-        BRK #$00
-        BRK #$00
-        BRK #$48
-        LDA (p00,X)
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$F0
-        .BYTE $33,$10 ;RLA (p10),Y
-        BRK #$00
-        BRK #$10
-        LDA (p00,X)
-        BRK #$44
-        EOR a02
-        .BYTE $02    ;JAM 
-        ORA (p16,X)
-        .BYTE $13,$00 ;SLO (p00),Y
-        BRK #$00
-        BIT a24
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BPL bA164
-bA164   BRK #$00
-        BRK #$00
-        BPL bA10B
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BEQ bA1AB
-        PHP 
-        .BYTE $77,$00 ;RRA f00,X
-        BRK #$F0
-        .BYTE $33,$00 ;RLA (p00),Y
-        BRK #$04
-bA182   =*+$01
-        .BYTE $03,$06 ;SLO (p06,X)
-        .BYTE $04,$00 ;NOP a00
-        CPX #$A1
-        BCC bA189
-bA189   BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$4D
-        .BYTE $4F,$04,$06 ;SRE $0604
-        ORA (p18,X)
-        ORA f01,X
-        .BYTE $23,$CC ;RLA (pCC,X)
-        ORA a10
-        BRK #$00
-bA19E   BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$01
-        BRK #$00
-bA1AB   =*+$01
-        BRK #$00
-        BRK #$00
-        PHP 
+        ADC aA59C
+        STA aA69B
+        CMP #$07
+        BCC bA033
+        AND #$07
+        STA aA69B
+        SEC 
+bA033   LDA aA69C
+        ADC aA59D
+        STA aA69C
         LDX #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        EOR f00,X
-        BRK #$00
-        BRK #$F0
-        .BYTE $33,$10 ;RLA (p10),Y
+jA03E   LDY fA621,X
+        STY a4C
+        STX a4D
+        LDA fA5C3,X
         CLC 
-        BRK #$00
+        ADC #$01
+        CMP fA58B,Y
+        BCC bA064
+        INC fA5C6,X
+        LDA fA5B4,X
+        CLC 
+        ADC #$01
+        CMP #$03
+        BCC bA05F
+        LDA #$00
+bA05F   STA fA5B4,X
+        LDA #$00
+bA064   STA fA5C3,X
+        INC fA5AB,X
+        LDA fA61B,X
+        STA a4A
+        LDA fA618,X
+        STA a4B
+jA074   LDY #$00
+        LDA (p4A),Y
+        SEC 
+        SBC #$01
+        CMP #$21
+        BCS bA09E
+        ASL 
+        TAY 
+        LDA fA644,Y
+        STA aA096
+        LDA fA645,Y
+        STA aA097
+        LDY #$01
+        LDA (p4A),Y
+        LDY a4C
+        LDX a4D
+aA096   =*+$01
+aA097   =*+$02
+        JSR $0000
+        JSR sA578
+        JMP jA074
+
+bA09E   LDX a4C
+        LDY a4D
+        LDA fA587,X
+        BEQ bA0CF
+        LDA fA59F,Y
+        BEQ bA0AF
+        JSR sA362
+bA0AF   LDA fA5AE,Y
+        BEQ bA0B7
+        JSR sA425
+bA0B7   LDA fA58C,X
+        BEQ bA0BF
+        JSR sA3BC
+bA0BF   LDA fA58D,X
+        BEQ bA0C7
+        JSR sA3F2
+bA0C7   LDA fA5FC,Y
+        BEQ bA0CF
+        JSR sA371
+bA0CF   JSR sA0E7
+        LDX a4D
+        LDA a4A
+        STA fA61B,X
+        LDA a4B
+        STA fA618,X
+        INX 
+        CPX #$03
+        BCS bA0E6
+        JMP jA03E
+
+bA0E6   RTS 
+
+sA0E7   LDX a4D
+        LDY a4C
+        LDA fA615,X
+        SEC 
+        SBC #$01
+        STA fA615,X
+        LDA fA5CF,X
+        SBC #$00
+        STA fA5CF,X
+        BNE bA110
+        LDA fA615,X
+        BEQ bA113
+        CMP fA641,X
+        BCS bA110
+        LDA fA68A,Y
+        AND #$FE
+        STA fA68A,Y
+bA110   JMP jA1E4
+
+bA113   LDA #$00
+        STA fA688,Y
+        STA fA5CF,X
+        STA fA5AB,X
+        STA fA5D2,X
+        STA fA5D8,X
+        STA fA5D5,X
+        STA fA5C3,X
+        STA fA5C6,X
+        STA fA5B4,X
+        STA fA5B1,X
+        CPX aA586
+        BNE bA141
+        STA aA69B
+        LDA aA59E
+        STA aA69C
+bA141   LDA fA5F9,X
+        STA fA68B,Y
+        LDA fA5F0,X
+        STA fA68C,Y
+        LDA fA5F6,X
+        STA fA689,Y
+jA153   LDY #$00
+        LDA (p4A),Y
+        BNE bA164
+        LDA #$00
+        STA aA613
+        STA aA614
+        JMP jA1A5
+
+bA164   CMP #$80
+        BCC jA1A5
+        CLC 
+        ADC fA5E7,X
+        STA aA611
+        LDA fA5BA,X
+        BEQ bA187
+        CLC 
+        ADC aA611
+        JSR sA536
+        LDA aA613
+        STA fA5C0,X
+        LDA aA614
+        STA fA5BD,X
+bA187   LDA fA5B7,X
+        BEQ bA19F
+        CLC 
+        ADC aA611
+        JSR sA536
+        LDA aA613
+        STA fA5A2,X
+        LDA aA614
+        STA fA5A5,X
+bA19F   LDA aA611
+        JSR sA536
+jA1A5   LDY a4C
+        LDA aA613
+        STA fA687,Y
+        STA fA587,Y
+        LDA aA614
+        STA fA686,Y
+        STA fA588,Y
+        LDY #$01
+        LDA (p4A),Y
+        LDY a4C
+        STA fA615,X
+        JSR sA578
+        LDA fA615,X
+        CMP #$FF
+        BNE bA1DB
+        LDA fA588,Y
+        STA fA5A5,X
+        LDA fA587,Y
+        STA fA5A2,X
+        JMP jA153
+
+bA1DB   LDA fA5F3,X
+        STA fA68A,Y
+        STA fA589,Y
+jA1E4   RTS 
+
+jA1E5   LDA #$00
+        STA aA000
+        LDX #$7E
+bA1EC   STA fA585,X
+        DEX 
+        BNE bA1EC
+        LDX #$02
+        STX aA642
+        STX fA641
+        STX aA643
+bA1FD   LDA #$01
+        STA fA615,X
+        STA fA61E,X
+        DEX 
+        BPL bA1FD
+        LDA a4A
+        CLC 
+        ADC #$04
+        STA fA61B
+        LDA a4B
+        ADC #$00
+        STA fA618
+        LDX #$7E
+        LDY #$00
+bA21B   LDA (p4A),Y
+        CLC 
+        ADC fA61B
+        STA aA59E,X
+        PHP 
         INY 
-        LDA (p00,X)
-        BRK #$4D
-        .BYTE $4F,$02,$00 ;SRE $0002
-        ORA (p18,X)
-        ORA f00,X
-        BCC bA19E
-        BIT a02
-        SED 
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        ORA (p00,X)
-        BRK #$00
-        BRK #$00
-        BRK #$08
-        LDX #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        .BYTE $22    ;JAM 
-        BRK #$55
-        BRK #$00
-        BRK #$00
-        BEQ bA22B
-        BPL bA182
-        BRK #$00
-        BEQ bA231
-        BRK #$00
-        .BYTE $E2,$E2 ;NOP #$E2
-        BRK #$0E
-        ORA (p10,X)
-        BPL bA208
-bA208   .BYTE $E2,$E2 ;NOP #$E2
-        BRK #$0E
-        ORA (p10,X)
-        BPL bA210
-bA210   BRK #$00
-        BIT a24
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        RTI 
-
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        ORA (p00),Y
-bA22B   BRK #$00
-        BRK #$00
-        BRK #$00
-bA231   EOR f00,X
-        BRK #$00
-        BRK #$F0
-        .BYTE $33,$02 ;RLA (p02),Y
-        STA @wa0000,Y
-        BEQ bA271
-        BRK #$00
-        .BYTE $03,$03 ;SLO (p03,X)
-        PHP 
-        STA (p00),Y
-        CPX #$A1
+        PLP 
+        LDA (p4A),Y
+        ADC fA618
+        STA fA59B,X
         INY 
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        ORA (p03,X)
-        PHP 
-        .BYTE $93,$00 ;AHX (p00),Y
-        CPX #$A2
+        INX 
+        BPL bA21B
+        JSR sA241
+        LDA #$01
+        STA aA000
         RTS 
 
-        LDX #$98
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        .BYTE $43,$43 ;SRE (p43,X)
-        BRK #$0E
-        ORA (p16,X)
-        .BYTE $13,$00 ;SLO (p00),Y
-        BCS bA28D
-        .BYTE $02    ;JAM 
-        .BYTE $1A    ;NOP 
-        BRK #$00
-        BRK #$00
-bA271   =*+$01
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$55
-        BRK #$00
-bA28D   =*+$01
-        BRK #$00
-        BEQ bA2C3
-        .BYTE $04,$37 ;NOP a37
-        BRK #$00
-        BEQ bA2C9
-        BRK #$00
-        .BYTE $42    ;JAM 
-        .BYTE $42    ;JAM 
-        BRK #$05
-        ORA (p18,X)
-        ORA a9000
+        LDA #$00
+        STA aA000
+sA241   LDX #$17
+bA243   LDA #$09
+        STA fA686,X
+        LDA #$00
+        STA fA686,X
+        DEX 
+        BPL bA243
         RTS 
 
-        .BYTE $1C,$10,$F8 ;NOP $F810,X
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        .BYTE $22    ;JAM 
-        BRK #$55
-bA2C3   =*+$01
-        BRK #$00
-        BRK #$00
-        BEQ bA2FB
-        PHP 
-bA2C9   .BYTE $17,$00 ;SLO f00,X
-        BRK #$F0
-        .BYTE $33,$00 ;RLA (p00),Y
-        BRK #$01
-        .BYTE $03,$08 ;SLO (p08,X)
-        .BYTE $72    ;JAM 
-        BRK #$E0
-        LDX #$E0
-        LDX #$98
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        .BYTE $42    ;JAM 
-        .BYTE $42    ;JAM 
-        BRK #$05
-        ORA (p18,X)
-        .BYTE $0C,$00,$23 ;NOP $2300
-        .BYTE $23,$23 ;RLA (p23,X)
-        .BYTE $23,$00 ;RLA (p00,X)
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$03
-bA2FB   BRK #$00
-        BRK #$00
-        BRK #$00
-        .BYTE $3A    ;NOP 
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$55
-        BRK #$00
-        BRK #$00
-        BEQ bA343
-        JSR e0027
-        BRK #$18
-        .BYTE $A3,$00 ;LAX (p00,X)
-        BRK #$42
-        .BYTE $42    ;JAM 
-        BRK #$05
-        .BYTE $07,$00 ;SLO a00
-        BRK #$00
-        BRK #$00
-        BPL bA334
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        .BYTE $04,$00 ;NOP a00
-bA334   BRK #$00
-        BRK #$00
-        BEQ bA36D
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-bA343   =*+$01
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        ORA (p00,X)
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        ORA (p03,X)
-        PHP 
-        .BYTE $44,$00 ;NOP a00
-        CPX #$A3
+        STA aA69E
         RTS 
 
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        SEI 
-        .BYTE $7A    ;NOP 
-        BRK #$04
-        ORA (p0E,X)
-        .BYTE $0C,$01,$23 ;NOP $2301
-        .BYTE $23,$24 ;RLA (p24,X)
-        .BYTE $23,$00 ;RLA (p00,X)
-bA36D   BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$18
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        .BYTE $83,$00 ;SAX (p00,X)
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        EOR f00,X
-        BRK #$00
-        BRK #$F0
-        .BYTE $33,$04 ;RLA (p04),Y
-        .BYTE $17,$00 ;SLO f00,X
-        BRK #$98
-        .BYTE $A3,$00 ;LAX (p00,X)
-        BRK #$4D
-        .BYTE $4F,$01,$04 ;SRE $0401
-        ORA (p18,X)
-        ORA f01,X
-        BRK #$00
-        .BYTE $1C,$10,$FE ;NOP $FE10,X
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$D0
-        .BYTE $A3,$00 ;LAX (p00,X)
-        BRK #$00
-        BRK #$00
-        BRK #$F0
-        .BYTE $33,$01 ;RLA (p01),Y
-        ROL a00
-        BRK #$98
-        .BYTE $A3,$00 ;LAX (p00,X)
-        BRK #$4D
-        .BYTE $4F,$03,$04 ;SRE $0403
-        ORA (p18,X)
-        ORA f01,X
-        BRK #$00
-        .BYTE $1A    ;NOP 
-        BPL bA3DD
-bA3DD   BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-bA3F2   =*+$01
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$F0
-        .BYTE $33,$00 ;RLA (p00),Y
-        BRK #$F0
-        .BYTE $33,$04 ;RLA (p04),Y
-        ORA f00,X
-        BRK #$F0
-        .BYTE $33,$00 ;RLA (p00),Y
-        BRK #$02
-        .BYTE $03,$08 ;SLO (p08,X)
-        BRK #$00
-        CPX aA4
-        CLC 
-        LDY a18
-        LDY a18
-        .BYTE $B3,$A0 ;LAX ($A0),Y
-        BRK #$00
-        RTI 
+        STA fA5F3,X
+        RTS 
 
-        RTI 
+        STA fA5F9,X
+        RTS 
 
-        BRK #$01
-        BRK #$16
-        .BYTE $14,$00 ;NOP f00,X
-        .BYTE $23,$60 ;RLA ($60,X)
-        ASL a10
-        .BYTE $23,$00 ;RLA (p00,X)
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$22
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BEQ bA47B
-        ORA (p88,X)
-        BRK #$00
-        BVC bA3F2
-        BRK #$00
-        RTI 
+        STA fA5F0,X
+        RTS 
 
-        RTI 
+        STA aA611
+        LDA fA5E1,X
+        BNE bA272
+        INC fA5E1,X
+        LDA aA611
+        STA fA5FF,X
+bA272   DEC fA5FF,X
+        LDA fA5FF,X
+        BEQ bA285
+        LDA fA605,X
+        STA a4A
+        LDA fA608,X
+        STA a4B
+        RTS 
 
-        BRK #$07
-        BRK #$16
-        .BYTE $14,$00 ;NOP f00,X
-        BRK #$00
-        .BYTE $1C,$05,$23 ;NOP $2305,X
-bA45E   =*+$01
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        .BYTE $22    ;JAM 
-        BRK #$00
-bA47B   =*+$01
-        BRK #$00
-        BRK #$00
-        BEQ bA4B3
-        .BYTE $02    ;JAM 
-        .BYTE $77,$00 ;RRA f00,X
-        BRK #$F0
-        .BYTE $33,$00 ;RLA (p00),Y
-        BRK #$02
-        .BYTE $02    ;JAM 
-        PHP 
-        .BYTE $33,$00 ;RLA (p00),Y
-        CPX aA4
-        TYA 
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        .BYTE $42    ;JAM 
-        .BYTE $42    ;JAM 
-        BRK #$0B
-        ORA (p12,X)
-        ORA f00,X
-        .BYTE $23,$60 ;RLA ($60,X)
-        BPL bA4BC
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-bA4B3   =*+$01
-        BMI bA4B4
-bA4B4   BRK #$00
-        BRK #$00
-        BNE bA45E
-        BRK #$00
-bA4BC   BRK #$00
-        BRK #$11
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BEQ bA4FB
-        BPL bA4E1
-        BRK #$00
-        BEQ bA501
-        BRK #$00
-        .BYTE $42    ;JAM 
-        .BYTE $42    ;JAM 
-        BRK #$0C
-        ORA (p12,X)
-        ORA f00,X
-        BRK #$00
-        BIT a07
-        BRK #$00
-bA4DF   =*+$01
-        BRK #$00
-bA4E1   =*+$01
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
+bA285   DEC fA5E1,X
+        RTS 
+
+        LDA a4A
+        STA fA605,X
+        LDA a4B
+        STA fA608,X
+        RTS 
+
+        STA aA611
+        LDA fA5E4,X
+        BNE bA2A5
+        INC fA5E4,X
+        LDA aA611
+        STA fA602,X
+bA2A5   DEC fA602,X
+        LDA fA602,X
+        BEQ bA2B8
+        LDA fA60B,X
+        STA a4A
+        LDA fA60E,X
+        STA a4B
+        RTS 
+
+bA2B8   DEC fA5E4,X
+        RTS 
+
+        LDA a4A
+        STA fA60B,X
+        LDA a4B
+        STA fA60E,X
+        RTS 
+
+        STA fA5E7,X
+        RTS 
+
+        STA fA5FC,X
+        RTS 
+
+        STA fA5ED,X
+        RTS 
+
+        STA fA5EA,X
+        RTS 
+
+        STA fA5F6,X
+        RTS 
+
+        CMP #$64
+        BCC bA2E6
+        SEC 
+        SBC #$64
+        STA fA641,X
+        RTS 
+
+bA2E6   STA fA58A,Y
+        RTS 
+
+        STA fA58B,Y
+        RTS 
+
+        CMP #$63
+        BCC bA2F9
+        SEC 
+        SBC #$64
+        STA aA586
+        RTS 
+
+bA2F9   STA fA58C,Y
+        RTS 
+
+        STA fA58D,Y
+        RTS 
+
+        STA fA59F,X
+        RTS 
+
+        STA fA5AE,X
+        RTS 
+
+        STA fA5A8,X
+        RTS 
+
+        PHA 
+        AND #$0F
+        STA fA5DE,X
+        PLA 
+        AND #$F0
+        LSR 
+        LSR 
+        LSR 
+        LSR 
+        STA fA5DB,X
+        RTS 
+
+        STA fA61E,X
+        RTS 
+
+        STA aA69D
+        RTS 
+
+        STA aA59E
+        RTS 
+
         CLC 
-        BRK #$00
-        BRK #$00
-        BRK #$98
-        LDY a00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-bA4FB   BRK #$00
-        BRK #$F0
-        .BYTE $33,$20 ;RLA (p20),Y
-bA501   .BYTE $27,$00 ;RLA a00
-        BRK #$F0
-        .BYTE $33,$00 ;RLA (p00),Y
-        BRK #$02
-        .BYTE $02    ;JAM 
-        PHP 
-        .BYTE $93,$00 ;AHX (p00),Y
-        CPX aA5
+        ADC fA5E7,X
+        STA fA5E7,X
+        RTS 
+
         CLC 
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        .BYTE $42    ;JAM 
-        .BYTE $42    ;JAM 
-        BRK #$0B
-        ORA (p12,X)
-        ORA f00,X
-        .BYTE $23,$60 ;RLA ($60,X)
-        BPL bA53C
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BMI bA534
-bA534   BRK #$00
-        BRK #$00
-        BVC bA4DF
-        BRK #$00
-bA53C   BRK #$00
-        BRK #$11
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BEQ bA57B
-        BPL bA561
-        BRK #$00
-        SEI 
-        LDA @wa0000,X
-        .BYTE $42    ;JAM 
-        .BYTE $42    ;JAM 
-        BRK #$0C
-        ORA (p12,X)
-        ORA f00,X
-        BRK #$00
-        BIT a07
-        BRK #$00
-        BRK #$00
-bA561   =*+$01
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
+        ADC aA69E
+        STA aA69E
+        RTS 
+
+        STA fA5BA,X
+        RTS 
+
+        PHA 
+        AND #$F8
+        LSR 
+        LSR 
+        LSR 
+        STA aA59D
+        PLA 
+        AND #$07
+        STA aA59C
+        RTS 
+
+        STA fA5B7,X
+        RTS 
+
+        STA fA5C9,X
+        RTS 
+
+        STA fA5CC,X
+        RTS 
+
         CLC 
-        BRK #$00
-        BRK #$00
-        BRK #$18
-        LDA a00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-        BRK #$00
-bA57B   BRK #$00
-        BRK #$F0
-        .BYTE $33,$20 ;RLA (p20),Y
-        .BYTE $27,$00 ;RLA a00
-        BRK #$78
-        .BYTE $BD,$00,$00,$01,$03,$08,$44,$00
-        .BYTE $E4,$A5,$98,$B4,$20,$A5,$98,$BB
-        .BYTE $D0,$00,$00,$43,$43,$00,$08,$01
-        .BYTE $17,$15,$00,$23,$23,$23,$24,$00
-        .BYTE $00,$00,$00,$00,$00,$00,$00,$00
-        .BYTE $00,$00,$00,$00,$00,$00,$00,$00
-        .BYTE $00,$00,$00,$00,$00,$00,$00,$00
-        .BYTE $00,$00,$00,$00,$55,$00,$00,$00
-        .BYTE $00,$F0,$33,$04,$47,$00,$00,$F0
-        .BYTE $33,$00,$00,$02,$03,$08,$13,$00
-        .BYTE $E4,$A5,$E0,$00,$00,$00,$00,$00
-        .BYTE $00,$00,$00,$45,$46,$03,$00,$01
-        .BYTE $18,$15,$00,$B0,$23,$04,$23,$00
-        .BYTE $00,$00,$00,$00,$00,$00,$00,$00
-        .BYTE $00,$00,$00,$00,$00,$30,$00,$00
-        .BYTE $00,$00,$00,$00,$23,$00,$00,$00
-        .BYTE $00,$00,$00,$00,$55,$00,$00,$00
-        .BYTE $00,$F0,$33,$02,$68,$00,$00,$08
-        .BYTE $BB,$00,$00,$03,$03,$08,$00,$00
-        .BYTE $E4,$A6,$28,$B7,$D0,$00,$00,$00
-        .BYTE $00,$00,$00,$47,$47,$00,$00,$07
-        .BYTE $2E,$20,$00,$B0,$BC,$06,$10,$00
-        .BYTE $00,$01,$00,$00,$FC,$04,$00,$0C
-        .BYTE $00,$00,$00,$00,$00,$50,$00,$00
-        .BYTE $00,$00,$00,$60,$A6,$00,$00,$00
-        .BYTE $00,$00,$00,$00,$00,$00,$00,$00
-        .BYTE $00,$F0,$33,$10,$17,$00,$00,$60
-        .BYTE $A6,$00,$00,$47,$48,$08,$00,$07
-        .BYTE $2E,$20,$00,$00,$00,$06,$02,$23
-        .BYTE $00,$00,$00,$00,$00,$00,$00,$00
-        .BYTE $00,$00,$00,$00,$00,$00,$00,$00
-        .BYTE $00,$00,$00,$00,$00,$00,$00,$00
-        .BYTE $00,$28,$A6,$00,$00,$00,$00,$00
-        .BYTE $00,$F0,$33,$10,$17,$00,$00,$F0
-        .BYTE $33,$00,$00,$01,$03,$08,$11,$00
-        .BYTE $E4,$A6,$A8,$00,$00,$00,$00,$00
+        ADC fA5CF,X
+        STA fA5CF,X
+        RTS 
+
+sA362   LDA fA5AB,Y
+        CMP fA5A8,Y
+        BCC bA370
+        LDA fA59F,Y
+        JMP jA4A0
+
+bA370   RTS 
+
+sA371   LDA fA5C3,Y
+        BNE bA370
+        LDA fA5DB,Y
+        BEQ bA3AC
+        LDA fA5D8,Y
+        BEQ bA39B
+        LDA fA688,X
+        SEC 
+        SBC fA5FC,Y
+        STA fA688,X
+        BCS bA3BB
+        DEC fA689,X
+        LDA fA689,X
+        CMP fA5DE,Y
+        BCS bA370
+        LDA #$00
+        BEQ bA3A8
+bA39B   JSR bA3AC
+        LDA fA689,X
+        CMP fA5DB,Y
+        BCC bA370
+        LDA #$01
+bA3A8   STA fA5D8,Y
+        RTS 
+
+bA3AC   LDA fA688,X
+        CLC 
+        ADC fA5FC,Y
+        STA fA688,X
+        BCC bA3BB
+        INC fA689,X
+bA3BB   RTS 
+
+sA3BC   CMP #$06
+        BCC bA3CF
+        LDA fA5C6,Y
+        AND #$01
+        BNE bA3E9
+        LDA fA58C,X
+        SEC 
+        SBC #$05
+        BPL bA3E3
+bA3CF   LDA fA5AB,Y
+        CMP #$02
+        BCC bA3E9
+        LDA fA58A,X
+        BEQ bA3E0
+        CMP fA5AB,Y
+        BCC bA3E9
+bA3E0   LDA fA58C,X
+bA3E3   TAY 
+        LDA fA623,Y
+        BNE bA3EC
+bA3E9   LDA fA589,X
+bA3EC   STA fA68A,X
+        LDY a4D
+        RTS 
+
+sA3F2   CMP #$01
+        BNE bA40C
+        LDA fA5C6,Y
+        AND #$01
+        BNE bA422
+bA3FD   LDA fA5A2,Y
+        STA fA687,X
+        LDA fA5A5,Y
+        STA fA686,X
+        JMP jA41E
+
+bA40C   LDA fA5B4,Y
+        BEQ bA422
+        CMP #$01
+        BEQ bA3FD
+        LDA fA5C0,Y
+        STA fA687,X
+        LDA fA5BD,Y
+jA41E   STA fA686,X
+        RTS 
+
+bA422   JMP jA529
+
+sA425   LDA fA5CC,Y
+        BNE bA430
+        LDA fA5AE,Y
+        STA fA5B1,Y
+bA430   LDA fA5D5,Y
+        CMP #$01
+        BEQ bA441
+        CMP #$02
+        BEQ bA453
+        JSR sA472
+        JMP jA456
+
+bA441   LDA fA5B1,Y
+        CLC 
+        ADC fA5CC,Y
+        CMP fA5AE,Y
+        BCC bA450
+        LDA fA5AE,Y
+bA450   STA fA5B1,Y
+bA453   JSR sA487
+jA456   LDA fA5D2,Y
+        CLC 
+        ADC #$01
+        CMP fA61E,Y
+        BCC bA46E
+        LDA fA5D5,Y
+        CLC 
+        ADC #$01
+        AND #$03
+        STA fA5D5,Y
+        LDA #$00
+bA46E   STA fA5D2,Y
+        RTS 
+
+sA472   LDA fA588,X
+        CLC 
+        ADC fA5B1,Y
+        STA fA588,X
+        STA fA686,X
+        LDA fA587,X
+        ADC #$00
+        JMP jA499
+
+sA487   LDA fA588,X
+        SEC 
+        SBC fA5B1,Y
+        STA fA588,X
+        STA fA686,X
+        LDA fA587,X
+        SBC #$00
+jA499   STA fA587,X
+        STA fA687,X
+bA49F   RTS 
+
+jA4A0   CMP #$01
+        BNE bA520
+        LDA fA5A2,Y
+        CMP fA587,X
+        BCC bA4DE
+        BNE bA4B8
+        LDA fA5A5,Y
+        CMP fA588,X
+        BEQ bA49F
+        BCC bA4DE
+bA4B8   JSR sA4F7
+        LDA fA587,X
+        CMP fA5A2,Y
+        BEQ bA4C7
+        BCS bA4CF
+        BCC bA49F
+bA4C7   LDA fA588,X
+        CMP fA5A5,Y
+        BCC bA49F
+bA4CF   LDA fA5A5,Y
+        STA fA588,X
+        LDA fA5A2,Y
+        STA fA587,X
+        JMP jA529
+
+bA4DE   JSR sA50A
+        LDA fA587,X
+        CMP fA5A2,Y
+        BEQ bA4ED
+        BCC bA4CF
+        BCS bA49F
+bA4ED   LDA fA588,X
+        CMP fA5A5,Y
+        BCS bA49F
+        BCC bA4CF
+sA4F7   LDA fA588,X
+        CLC 
+        ADC fA5EA,Y
+        STA fA588,X
+        LDA fA587,X
+        ADC fA5ED,Y
+        JMP jA51A
+
+sA50A   LDA fA588,X
+        SEC 
+        SBC fA5EA,Y
+        STA fA588,X
+        LDA fA587,X
+        SBC fA5ED,Y
+jA51A   STA fA587,X
+        JMP jA529
+
+bA520   CMP #$03
+        BEQ sA50A
+        CMP #$04
+        BEQ sA4F7
+        RTS 
+
+jA529   LDA fA587,X
+        STA fA687,X
+        LDA fA588,X
+        STA fA686,X
+        RTS 
+
+sA536   LDX #$07
+jA538   CMP #$8C
+        BCC bA542
+        SBC #$0C
+        DEX 
+        JMP jA538
+
+bA542   SBC #$7F
+        ASL 
+        TAY 
+        LDA fA629,Y
+        STA aA613
+        LDA fA62A,Y
+        STA aA614
+        CPX #$00
+        BEQ bA573
+bA556   LSR aA613
+        ROR aA614
+        DEX 
+        BNE bA556
+        LDX a4D
+        LDY a4C
+        LDA aA614
+        CLC 
+        ADC fA5C9,X
+        STA aA614
+        BCC bA572
+        INC aA613
+bA572   RTS 
+
+bA573   LDY a4C
+        LDX a4D
+        RTS 
+
+sA578   LDA a4A
+        CLC 
+        ADC #$02
+        STA a4A
+        BCC bA583
+        INC a4B
+bA583   RTS 
+
+        .BYTE $00
+fA585   .BYTE $00
+aA586   .BYTE $00
+fA587   .BYTE $00
+fA588   .BYTE $00
+fA589   .BYTE $00
+fA58A   .BYTE $00
+fA58B   .BYTE $00
+fA58C   .BYTE $00
+fA58D   .BYTE $00,$00,$00,$00,$00,$00,$00,$00
+        .BYTE $00,$00,$00,$00,$00,$00
+fA59B   .BYTE $00
+aA59C   .BYTE $00
+aA59D   .BYTE $00
+aA59E   .BYTE $00
+fA59F   .BYTE $00,$00,$00
+fA5A2   .BYTE $00,$00,$00
+fA5A5   .BYTE $00,$00,$00
+fA5A8   .BYTE $00,$00,$00
+fA5AB   .BYTE $00,$00,$00
+fA5AE   .BYTE $00,$00,$00
+fA5B1   .BYTE $00,$00,$00
+fA5B4   .BYTE $00,$00,$00
+fA5B7   .BYTE $00,$00,$00
+fA5BA   .BYTE $00,$00,$00
+fA5BD   .BYTE $00,$00,$00
+fA5C0   .BYTE $00,$00,$00
+fA5C3   .BYTE $00,$00,$00
+fA5C6   .BYTE $00,$00,$00
+fA5C9   .BYTE $00,$00,$00
+fA5CC   .BYTE $00,$00,$00
+fA5CF   .BYTE $00,$00,$00
+fA5D2   .BYTE $00,$00,$00
+fA5D5   .BYTE $00,$00,$00
+fA5D8   .BYTE $00,$00,$00
+fA5DB   .BYTE $00,$00,$00
+fA5DE   .BYTE $00,$00,$00
+fA5E1   .BYTE $00,$00,$00
+fA5E4   .BYTE $00,$00,$00
+fA5E7   .BYTE $00,$00,$00
+fA5EA   .BYTE $00,$00,$00
+fA5ED   .BYTE $00,$00,$00
+fA5F0   .BYTE $00,$00,$00
+fA5F3   .BYTE $00,$00,$00
+fA5F6   .BYTE $00,$00,$00
+fA5F9   .BYTE $00,$00,$00
+fA5FC   .BYTE $00,$00,$00
+fA5FF   .BYTE $00,$00,$00
+fA602   .BYTE $00,$00,$00
+fA605   .BYTE $00,$00,$00
+fA608   .BYTE $00,$00,$00
+fA60B   .BYTE $00,$00,$00
+fA60E   .BYTE $00,$00,$00
+aA611   .BYTE $00,$00
+aA613   .BYTE $00
+aA614   .BYTE $00
+fA615   .BYTE $00,$00,$00
+fA618   .BYTE $00,$00,$00
+fA61B   .BYTE $00,$00,$00
+fA61E   .BYTE $00,$00,$00
+fA621   .BYTE $00,$07
+fA623   .BYTE $0E,$41,$21,$11,$81,$51
+fA629   .BYTE $83
+fA62A   .BYTE $68,$8B,$39,$93,$80,$9C,$45,$A5
+        .BYTE $90,$AF,$69,$B9,$D7,$C4,$E3,$D0
+        .BYTE $99,$DD,$00,$EA,$25,$F8,$10
+fA641   .BYTE $00
+aA642   .BYTE $00
+aA643   .BYTE $00
+fA644   .BYTE $51
+fA645   .BYTE $A2,$59,$A2,$55,$A2,$D7,$A2,$DB
+        .BYTE $A2,$EA,$A2,$EE,$A2,$FD,$A2,$09
+        .BYTE $A3,$5D,$A2,$05,$A3,$CF,$A2,$D3
+        .BYTE $A2,$CB,$A2,$01,$A3,$61,$A2,$89
+        .BYTE $A2,$94,$A2,$BC,$A2,$C7,$A2,$0D
+        .BYTE $A3,$1E,$A3,$22,$A3,$26,$A3,$5A
+        .BYTE $A3,$2A,$A3,$32,$A3,$3A,$A3,$3E
+        .BYTE $A3,$3C,$A2,$4E,$A3,$52,$A3,$56
+        .BYTE $A3
+fA686   .BYTE $00
+fA687   .BYTE $00
+fA688   .BYTE $00
+fA689   .BYTE $00
+fA68A   .BYTE $00
+fA68B   .BYTE $00
+fA68C   .BYTE $00,$00,$00,$00,$00,$00,$00,$00
+        .BYTE $00,$00,$00,$00,$00,$00,$00
+aA69B   .BYTE $00
+aA69C   .BYTE $00
+aA69D   .BYTE $00
+aA69E   .BYTE $00
+
+        .BYTE $A8,$00,$00,$00,$00,$00
         .BYTE $00,$00,$00,$49,$49,$00,$0C,$01
         .BYTE $18,$09,$00,$23,$C8,$24,$01,$F8
         .BYTE $00,$00,$00,$00,$00,$00,$00,$00
