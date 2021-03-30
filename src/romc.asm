@@ -5394,6 +5394,7 @@ a4BF9   .BYTE $00,$00,$00,$00,$00,$00,$00,$01
 .include "sprites2.asm"
 
 .include "charset.asm"
+f6500
         .BYTE $00,$02,$2A,$AA,$2A,$0A,$00,$00
         .BYTE $AB,$AF,$AB,$AA,$AA,$AA,$1A,$3E
         .BYTE $A9,$EB,$A9,$AF,$A5,$AF,$A9,$AB
